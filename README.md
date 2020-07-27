@@ -22,7 +22,7 @@ One of the major takeaways from this project was several code refactorings that 
 For example, when comparing the individual digits for similarities ("X", "O", "_"), I would separate each integer using a combination of division and modulus. <br> When I went back and looked through the code, I figured that I could convert the integer into a String and use indexing to acquire the individual digits. This was a much more efficient and clean approach to the problem
 
 ### Challenges
-1. Due to my limited understanding of the game itself, it took me quite a while to determine how my game would be played. The original board game is played with 6 different colors and pegs whereas my game is played using a 4 digit number ranging from 1000-9999.
+1. Due to my limited understanding of the game itself, it took me quite a while to determine how my game would be played. The original board game is played with 6 different colors and pegs whereas my game is played using a 4 digit number ranging from 1000-9999.<br><br>
 2. Another issue I ran into was determing how to crack the code (cracking algorithm). Many examples of the game used an instance of the Knuth algorithm to solve the game but that was typically applied to the original game where there are around 1300 possible solutions. My game has around 9000 possible solutions and thus would take considerably longer to solve using the Knuth algorithm. I ended up using a simple algorithm that uses random numbers until it finds a match ("X") and then continues, skipping the match, until it either runs out of turns or cracks the code.
 
 ## Version History

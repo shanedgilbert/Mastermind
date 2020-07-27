@@ -78,7 +78,7 @@ class GameLogic
     guess_input_string = guess_input.to_s
     computer_number_string = computer_number.to_s
 
-    for i in 0..guess_input.size - 1
+    for i in 0..3
       if guess_input_string[i] == computer_number_string[i]
         return_string[i] = "X"
       elsif computer_number_string.include? (guess_input_string[i])
@@ -94,7 +94,7 @@ class GameLogic
   def computer_guess_algorithm(previous_guess, accuracy_string)
     new_guess = "0000"
     previous_guess_string = previous_guess.to_s
-    for i in 0..previous_guess_string.size - 1
+    for i in 0..3
       if accuracy_string[i] == "X"
         new_guess[i] = previous_guess_string[i]
       elsif accuracy_string[i] != "X" && i == 0
