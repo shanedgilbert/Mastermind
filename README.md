@@ -1,7 +1,7 @@
 # Mastermind
 Created to showcase object oriented programming with Ruby. Done as part of The Odin Project. Runs in the terminal.
 
-[Repl.it](https://repl.it/@shanedgilbert/Tic-Tac-Toe#.replit)
+[Repl.it](https://repl.it/@shanedgilbert/Mastermind)
 
 ## How It Works:
 - A functional game of Mastermind. 
