@@ -1,72 +1,109 @@
 class GameLogic
   # Runs the game as the codebreaker
   def codebreaker
-    
-  end
-
-  # Runs the game as the codemaker
-  def codemaker
     computer_number = rand(1000..9999)
-    puts "computer number: #{computer_number}"
+    # puts "computer number: #{computer_number}"
 
-    # Calculates the individual digits for the computer's number
-    computer_digit_1 = computer_number / 1000
-    computer_digit_2 = (computer_number % 1000) / 100
-    computer_digit_3 = ((computer_number % 1000) % 100) / 10
-    computer_digit_4 = (((computer_number % 1000) % 100) % 10)
-
-    guesses = 0
+    guesses = 1
     puts "The computer has chosen a 4 digit code and it is now your turn to crack it! \n"
 
     # Loops 12 times for 12 guesses
     while guesses < 13 do
-      puts "What is your guess? (guess #{guesses + 1}) \n"
-      return_string = ""
+      puts "What is your guess? [1000-9999] (guess #{guesses}) \n"
+      guess_input = four_digit_input_checker
 
-      # Checks for valid 4 digit input
-      four_digit_input_check = true
-      while four_digit_input_check do
-        guess_input = gets.to_i
-        if guess_input < 1000 || guess_input > 9999
-          puts "Invalid input. Please try again"
-        else
-          four_digit_input_check = false
-        end
-      end
+      return_string = number_compare(guess_input, computer_number)
 
-      # Calculates the individual digits for the user's guess
-      player_digit_1 = guess_input / 1000
-      player_digit_2 = (guess_input % 1000) / 100
-      player_digit_3 = ((guess_input % 1000) % 100) / 10
-      player_digit_4 = (((guess_input % 1000) % 100) % 10)
-
-      if computer_digit_1 == player_digit_1
-        return_string = return_string + "X"
-      elsif computer_digit_1 == player_digit_2 || computer_digit_1 == player_digit_3 || computer_digit_1 == player_digit_4
-        return_string = return_string + "O"
-      end
-      if computer_digit_2 == player_digit_2
-        return_string = return_string + "X"
-      elsif computer_digit_2 == player_digit_1 || computer_digit_2 == player_digit_3 || computer_digit_2 == player_digit_4
-        return_string = return_string + "O"
-      end
-      if computer_digit_3 == player_digit_3
-        return_string = return_string + "X"
-      elsif computer_digit_3 == player_digit_1 || computer_digit_3 == player_digit_2 || computer_digit_3 == player_digit_4
-        return_string = return_string + "O"
-      end
-      if computer_digit_4 == player_digit_4
-        return_string = return_string + "X"
-      elsif computer_digit_4 == player_digit_1 || computer_digit_4 == player_digit_2 || computer_digit_4 == player_digit_3
-        return_string = return_string + "O"
-      end
       puts "Result: #{return_string}"
       if return_string == "XXXX"
         puts "You win! \n"
-        puts "It only took you #{guesses + 1} guesses"
+        puts "It only took you #{guesses} guesses"
+        break
+      elsif guesses == 11 && return_string != "XXXX"
+        puts "You lost. The correct code was #{computer_number}"
+      end
+      guesses += 1
+    end
+  end
+
+  # Runs the game as the codemaker
+  def codemaker
+    puts "Enter a 4 digit number: (1000-9999)"
+    guess_code = four_digit_input_checker
+    list_of_possible = (1000..9999).to_a
+
+    # Loops the algorithm up to 12 times (12 rounds)
+    guesses = 1
+    compare_result = "____"
+    computer_guess = 0000
+    while guesses < 13 do
+      if compare_result.include? ("X")
+        computer_guess = computer_guess_algorithm(computer_guess, compare_result)
+      else
+        computer_guess = rand(1000..9999)
+      end
+      compare_result = number_compare(computer_guess, guess_code)
+      puts "Computer's guess: #{computer_guess} (Guess #{guesses})"
+      puts "Computer's accuracy: #{compare_result} \n"
+
+      # Game ending statements
+      if compare_result == "XXXX"
+        puts "The computer guessed your code in #{guesses} guesses!"
+        break
+      elsif compare_result != "XXXX" && guesses == 12 
+        puts "The computer could not crack your code!"
         break
       end
       guesses += 1
     end
+  end
+
+  # Checks for valid 4 digit input
+  def four_digit_input_checker
+    four_digit_input_check = true
+    while four_digit_input_check do
+      input = gets.to_i
+      if input < 1000 || input > 9999
+        puts "Invalid input. Please try again"
+      else
+        four_digit_input_check = false
+      end
+    end
+    return input
+  end
+
+  # Compares the 2 four digit numbers for similarities and returns a string to indicate relativity
+  def number_compare(guess_input, computer_number)
+    return_string = "0000"
+
+    guess_input_string = guess_input.to_s
+    computer_number_string = computer_number.to_s
+
+    for i in 0..guess_input.size - 1
+      if guess_input_string[i] == computer_number_string[i]
+        return_string[i] = "X"
+      elsif computer_number_string.include? (guess_input_string[i])
+        return_string[i] = "O"
+      else
+        return_string[i] = "_"
+      end
+    end
+    return return_string
+  end
+
+  # Algorithm for 
+  def computer_guess_algorithm(previous_guess, accuracy_string)
+    new_guess = "0000"
+    previous_guess_string = previous_guess.to_s
+    for i in 0..previous_guess_string.size - 1
+      if accuracy_string[i] == "X"
+        new_guess[i] = previous_guess_string[i]
+      elsif accuracy_string[i] != "X" && i == 0
+        new_guess[i] = rand(1..9).to_s
+      else
+      new_guess[i] = rand(0..9).to_s
+      end
+    end
+    return new_guess.to_i
   end
 end

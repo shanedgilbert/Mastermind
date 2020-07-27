@@ -10,7 +10,7 @@ while game_repeat do
         - O = Correct number and incorrect position \b
         - blank = Incorrect number and incorrect position \n
         Codemaker: \n
-        - Enter a 4 digit number ranging from 0000-9999 \b
+        - Enter a 4 digit number ranging from 1000-9999 \b
         - The codebreaker has 12 turns to guess your number \n\n"
   puts "How would you like to play? \n
         1. Codebreaker \b
@@ -26,9 +26,8 @@ while game_repeat do
     end
     running_game = GameLogic.new()
     if play_input == 1
-      puts "Player wants to be a codebreaker"
+      running_game.codebreaker
     elsif play_input == 2
-      puts "Player wants to be a codemaker"
       running_game.codemaker
     end
   end
