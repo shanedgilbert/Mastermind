@@ -37,14 +37,10 @@ class GameLogic
     compare_result = "____"
     computer_guess = 0000
     while guesses < 13 do
-      if compare_result.include? ("X")
-        computer_guess = computer_guess_algorithm(computer_guess, compare_result)
-      else
-        computer_guess = rand(1000..9999)
-      end
+      computer_guess = computer_guess_algorithm(computer_guess, compare_result)
       compare_result = number_compare(computer_guess, guess_code)
       puts "Computer's guess: #{computer_guess} (Guess #{guesses})"
-      puts "Computer's accuracy: #{compare_result} \n"
+      puts "Computer's accuracy: #{compare_result} \n\n"
 
       # Game ending statements
       if compare_result == "XXXX"
@@ -91,7 +87,7 @@ class GameLogic
     return return_string
   end
 
-  # Algorithm for 
+  # Cracking algorithm for codemaker
   def computer_guess_algorithm(previous_guess, accuracy_string)
     new_guess = "0000"
     previous_guess_string = previous_guess.to_s
