@@ -1,3 +1,6 @@
+# Handles the logic for the different versions of the game (codebreaker, codemaker)
+# Author: Shane Gilbert
+
 class GameLogic
   # Runs the game as the codebreaker
   def codebreaker
